@@ -37,64 +37,13 @@ def flash(i,j):
                 
 def flash2(i,j):
     global data, flashes, flashCount
-    data[i-1][j] += 1 #above
-    data[i+1][j] += 1 #below
-    data[i][j+1] += 1 #right
-    data[i][j-1] += 1 #left
-    
-    data[i-1][j-1] += 1 #top left diagonal
-    data[i-1][j+1] += 1 #top right diagonal
-    data[i+1][j-1] += 1 #bottom left diagonal
-    data[i+1][j+1] += 1 #bottom right diagonal
-    
-    if data[i-1][j] > 9: #above
-        if [i-1, j] not in flashes:
-            flashes.append([i-1,j])
+    for x,y in [(-1,0), (1, 0), (0,1), (0,-1), (-1,-1), (-1, 1), (1,-1), (1,1)]:
+        data[i+x, j+y] += 1
+        if data[i+x][j+y] > 9 and [i+x, j+y] not in flashes:
+            flashes.append([i+x, j+y])
             flashCount += 1
-            flash2(i-1, j)
-            
-    if data[i+1][j] > 9: #below
-        if [i+1, j] not in flashes:
-            flashes.append([i+1, j])
-            flashCount += 1
-            flash2(i+1, j)
-            
-    if data[i][j+1] > 9: #right
-        if [i, j+1] not in flashes:
-            flashes.append([i, j+1])
-            flashCount += 1
-            flash2(i, j+1)
-            
-    if data[i][j-1] > 9: #left
-        if [i, j-1] not in flashes:
-            flashes.append([i, j-1])
-            flashCount += 1
-            flash2(i, j-1)
-            
-    if data[i-1][j-1] > 9: #TLD
-        if [i-1, j-1] not in flashes:
-            flashes.append([i-1,j-1])
-            flashCount += 1
-            flash2(i-1, j-1)
-            
-    if data[i-1][j+1] > 9: #TRD
-        if [i-1, j+1] not in flashes:
-            flashes.append([i-1, j+1])
-            flashCount += 1
-            flash2(i-1, j+1)
-            
-    if data[i+1][j-1] > 9: #BLD
-        if [i+1, j-1] not in flashes:
-            flashes.append([i+1, j-1])
-            flashCount += 1
-            flash2(i+1, j-1)
-            
-    if data[i+1][j+1] > 9: #BRD
-        if [i+1, j+1] not in flashes:
-            flashes.append([i+1, j+1])
-            flashCount += 1
-            flash2(i+1, j+1)
-            
+            flash2(i+x, j+y)
+
 
 for h in range(300): #each step
     add1(data)
@@ -107,4 +56,3 @@ for h in range(300): #each step
     flashes = []
 
 print(flashCount,"!")
-    
