@@ -21,26 +21,11 @@ def find(i,h):
         
 def ifNot9(i,h):
     global basins
-    above = padArr[i-1][h]
-    below = padArr[i+1][h]
-    right = padArr[i][h+1]
-    left = padArr[i][h-1]
-    if above < 9:
-        if [i-1, h] not in basins:
-            basins.append([i-1,h])
-            ifNot9(i-1, h)
-    if below < 9:
-        if [i+1, h] not in basins:
-            basins.append([i+1, h])
-            ifNot9(i+1, h)
-    if right < 9:
-        if [i, h+1] not in basins:
-            basins.append([i, h+1])
-            ifNot9(i, h+1)
-    if left < 9:
-        if [i, h-1] not in basins:
-            basins.append([i, h-1])
-            ifNot9(i, h-1)
+    for x,y in [(-1,0),(1,0),(0,1),(0,-1)]:
+        if padArr[i+x][h+y] < 9:
+            if [i+x, h+y] not in basins:
+                basins.append([i+x,h+y])
+                ifNot9(i+x, h+y)
 
 
 for i in range(len(data)):
